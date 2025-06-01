@@ -1,19 +1,39 @@
 #!/usr/bin/python3
-"""calculates how much rain will be trapped after it rains
+"""
+doc
 """
 
 
-def rain(walls):
-    """calculates how much rain will be trapped after it rains
+def rain(walls: list) -> int:
     """
-    if not walls or len(walls) < 3:
+    >>> walls = [0,1,0,2,1,0,1,3,2,1,2,1]
+    >>> print(rain(walls))
+    6
+    >>> walls = [0, 1, 0, 2, 0, 3, 0, 4]
+    >>> print(rain(walls))
+    6
+    >>> walls = [2, 0, 0, 4, 0, 0, 1, 0]
+    >>> print(rain(walls))
+    6
+    """
+
+    if not walls or walls == []:
+        return 0
+    if len(walls) < 3:
         return 0
 
-    rain = 0
-    for i in range(1, len(walls) - 1):
-        left = max(walls[:i])
-        right = max(walls[i + 1:])
-        min_wall = min(left, right)
-        if walls[i] < min_wall:
-            rain += min_wall - walls[i]
-    return rain
+    max_area = 0
+    for i in range(len(walls)):
+        max_left = max(walls[0:i + 1])
+        max_right = max(walls[i:])
+        area = min(max_left, max_right) - walls[i]
+        if area < 0:
+            area == 0
+        max_area += area
+    return max_area
+
+
+"""
+time complexity O(n^2)
+space complexity O(1)
+"""
